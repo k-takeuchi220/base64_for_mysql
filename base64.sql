@@ -1,4 +1,4 @@
- CREATE PROCEDURE proc57(IN param varchar(10))
+ CREATE FUNCTION  proc1(param varchar(10)) RETURNS varchar(100) DETERMINISTIC
      BEGIN
        DECLARE _SECOND varchar(100);
        DECLARE _FONT_CODE varchar(100);
@@ -36,17 +36,15 @@
        label2: LOOP
          SELECT SUBSTRING(_SECOND, _S_POSITION , 6) into _SPLIT_CHA;
          SELECT conv(_SPLIT_CHA,2,10) into _FONT_CODE;
-         IF _FONT_CODE <= 25 THEN
-           SET _DIFF_CODE = 65;
-         ELSEIF _FONT_CODE <= 51 THEN
-           SET _DIFF_CODE = 71;
-         ELSEIF _FONT_CODE <= 61 THEN
-           SET _DIFF_CODE = -4;
-         ELSEIF _FONT_CODE = 62 THEN
-           SET _DIFF_CODE = -19;
-         ELSEIF _FONT_CODE = 63 THEN
-           SET _DIFF_CODE = -16;
-         END IF;
+         
+         SET _DIFF_CODE =(
+         CASE WHEN _FONT_CODE <= 25 THEN  65
+	          WHEN _FONT_CODE <= 51 THEN  61
+	          WHEN _FONT_CODE <= 61 THEN  -4
+	          WHEN _FONT_CODE  = 62 THEN -19
+	          WHEN _FONT_CODE  = 63 THEN -16
+	          ELSE  null 
+	     END);
          
          select unhex(conv(conv(_SPLIT_CHA,2,10)+_DIFF_CODE,10,16)) into _RESULT;
          SELECT CONCAT(_RETURN_LIST,_RESULT) into _RETURN_LIST;
@@ -60,11 +58,12 @@
        label4: LOOP
   
          IF CHAR_LENGTH(_RETURN_LIST) % 4 = 0 THEN
-          select _RETURN_LIST;
            LEAVE label4;
          END IF;
         SELECT CONCAT(_RETURN_LIST,'=') into _RETURN_LIST;
         ITERATE label4;
        END LOOP label4;
+       
+       RETURN _RETURN_LIST;
      END;
      //
