@@ -1,4 +1,4 @@
- CREATE FUNCTION proc4(param varchar(10)) RETURNS varchar(100) DETERMINISTIC
+ CREATE FUNCTION to_base64(param varchar(10)) RETURNS varchar(100) DETERMINISTIC
      BEGIN
        DECLARE $SECOND varchar(100);
        DECLARE $FONT_CODE varchar(100);
