@@ -40,9 +40,8 @@
 	          WHEN $FONT_CODE <= 61 THEN  -4
 	          WHEN $FONT_CODE  = 62 THEN -19
 	          WHEN $FONT_CODE  = 63 THEN -16
-	          ELSE null;
 	     END);
-         
+
          SELECT unhex(conv(conv($SPLIT_CHA,2,10)+$DIFF_CODE,10,16)) into $RESULT;
          SELECT concat($RETURN_LIST,$RESULT) into $RETURN_LIST;
          SET $S_POSITION  = $S_POSITION + 6;
