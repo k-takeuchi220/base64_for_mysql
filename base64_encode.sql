@@ -1,3 +1,5 @@
+ delimiter //
+ 
  CREATE FUNCTION to_base64(param varchar(10)) RETURNS varchar(100) DETERMINISTIC
      BEGIN
        DECLARE $SECOND varchar(100);
@@ -61,4 +63,5 @@
        END LOOP loop_add_equal;
        RETURN $RETURN_LIST;
      END;
-     //
+     
+//
